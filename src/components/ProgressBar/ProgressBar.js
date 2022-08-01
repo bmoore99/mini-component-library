@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import styled from 'styled-components';
 
@@ -28,28 +27,31 @@ const ProgressBar = ({ value, size }) => {
   if (value > 100) value = 100;
 
   const style = STYLES[size];
-
-  // TODO: label?
-  return <Wrapper style={style} value={value} max={100} aria-valuenow={value} />;
+  return (
+    <Wrapper style={style} role="progressbar" value={value} max={100} aria-valuenow={value}>
+      <Progress value={value}>
+        <VisuallyHidden>{value}%</VisuallyHidden>
+      </Progress>
+    </Wrapper>);
 };
 
 export default ProgressBar;
 
-const Wrapper = styled.progress`
-  appearance: none;
+const Wrapper = styled.div`
   width: 370px;
   height: var(--height);
   box-shadow: inset 0px 2px 4px ${COLORS.transparentGray35};
-    border-radius: var(--borderRadius);
+  border-radius: var(--borderRadius);
+  background-color: ${COLORS.transparentGray15};
+  border-radius: var(--borderRadius);
+  padding: var(--padding);
+  overflow: hidden;
+`;
 
-  &::-webkit-progress-bar {
-    background-color: ${COLORS.transparentGray15};
-    padding: var(--padding);
-    border-radius: var(--borderRadius);
-  }
-
-  &::-webkit-progress-value {
+const Progress = styled.span`
+    display: block;
     background-color: ${COLORS.primary};
-    border-radius: ${props => props.value > 99  ? '4px' : '4px 0 0 4px'};
-  }
+    border-radius: ${props => props.value === 100  ? '4px' : '4px 0 0 4px'};
+    width: ${props => props.value + '%'};
+    height: 100%;
 `;
