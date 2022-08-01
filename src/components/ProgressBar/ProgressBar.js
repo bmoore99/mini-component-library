@@ -51,7 +51,7 @@ const Wrapper = styled.div`
 const Progress = styled.span`
     display: block;
     background-color: ${COLORS.primary};
-    border-radius: 4px 0 0 4px;
+    border-radius: ${props => props.value === 100  ? '4px' : '4px 0 0 4px'};
     width: ${props => props.value + '%'};
     height: 100%;
 `;
